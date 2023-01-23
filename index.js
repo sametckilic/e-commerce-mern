@@ -2,8 +2,17 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const userRoute = require('./routes/user');
+const authRoute = require('./routes/auth');
 
 dotenv.config();
+
+let server = app.listen(process.env.PORT || 3000,() =>{
+    console.log("App listening on " + server.address().port);
+});
+
+
+mongoose.set("strictQuery", false);
 
 mongoose.connect(
    process.env.MONGO_URL
@@ -13,10 +22,6 @@ mongoose.connect(
     console.log(err);
 });
 
+app.use(express.json());
 
-app.listen(3000);
-
-
-app.use("/", (req, res) => {
-    res.send("samet")
-})
+app.use("/api/auth", authRoute);
