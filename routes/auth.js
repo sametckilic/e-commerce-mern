@@ -42,7 +42,6 @@ router.post('/login', async (req, res) => {
             user.password,
             process.env.PASS_SEC
         );
-
         const encPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
         if (encPassword !== req.body.password) {
